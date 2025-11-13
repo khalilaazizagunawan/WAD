@@ -1,5 +1,6 @@
 # WAD
 
+```mermaid
 graph TB
     Client[Frontend Client] --> Gateway[API Gateway]
     
@@ -31,4 +32,5 @@ graph TB
     Service2 --> DB2
     Service3 --> DB3
     Service4 --> DB4
+```
 
