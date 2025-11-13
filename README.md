@@ -1,33 +1,34 @@
 # WAD
 
 graph TB
-    Client[Frontend Client<br/>HTML / CSS / JS] --> Gateway[API Gateway<br/>Express.js]
+    Client[Frontend Client] --> Gateway[API Gateway]
     
-    Gateway --> AuthService[Auth Service<br/>Register & Login]
-    Gateway --> MenuService[Menu Service<br/>Menu Makanan]
-    Gateway --> OrderService[Order Service<br/>Cart & Order]
-    Gateway --> DeliveryService[Delivery Service<br/>Pengelolaan Delivery]
+    Gateway --> Service1[Service 1<br/>Provider & Consumer]
+    Gateway --> Service2[Service 2<br/>Provider & Consumer]
+    Gateway --> Service3[Service 3<br/>Provider & Consumer]
+    Gateway --> Service4[Service 4<br/>Provider & Consumer]
     
-    AuthService -.->|HTTP Request/Response| MenuService
-    MenuService -.->|HTTP Request/Response| OrderService
-    OrderService -.->|HTTP Request/Response| DeliveryService
-    DeliveryService -.->|HTTP Request/Response| AuthService
+    Service1 -.->|HTTP Request/Response| Service2
+    Service2 -.->|HTTP Request/Response| Service3
+    Service3 -.->|HTTP Request/Response| Service4
+    Service4 -.->|HTTP Request/Response| Service1
     
     subgraph ServiceLayer [Service Layer]
-        AuthService
-        MenuService
-        OrderService
-        DeliveryService
+        Service1
+        Service2
+        Service3
+        Service4
     end
     
-    subgraph DataLayer [Data Layer (SQLite)]
-        AuthDB[(Auth DB)]
-        MenuDB[(Menu DB)]
-        OrderDB[(Order DB)]
-        DeliveryDB[(Delivery DB)]
+    subgraph DataLayer [Data Layer]
+        DB1[(Database 1)]
+        DB2[(Database 2)]
+        DB3[(Database 3)]
+        DB4[(Database 4)]
     end
     
-    AuthService --> AuthDB
-    MenuService --> MenuDB
-    OrderService --> OrderDB
-    DeliveryService --> DeliveryDB
+    Service1 --> DB1
+    Service2 --> DB2
+    Service3 --> DB3
+    Service4 --> DB4
+
