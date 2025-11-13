@@ -2,35 +2,26 @@
 
 ```mermaid
 graph TB
-    Client[Frontend Client<br/>HTML / CSS / JS] --> Gateway[API Gateway<br/>Express.js]
+    Client["Frontend Client (HTML/CSS/JS)"] --> Gateway["API Gateway (Express.js)"]
     
-    Gateway --> AuthService[Auth Service<br/>Register & Login]
-    Gateway --> MenuService[Menu Service<br/>Menu Makanan]
-    Gateway --> OrderService[Order Service<br/>Cart & Order]
-    Gateway --> DeliveryService[Delivery Service<br/>Pengelolaan Delivery]
+    Gateway --> CS["Customer Service (Menu, Cart, Order)"]
+    Gateway --> PS["Provider Service (Menu Management, Delivery)"]
     
-    AuthService -.->|HTTP Request/Response| MenuService
-    MenuService -.->|HTTP Request/Response| OrderService
-    OrderService -.->|HTTP Request/Response| DeliveryService
-    DeliveryService -.->|HTTP Request/Response| AuthService
+    CS -.-> PS
+    PS -.-> CS
     
-    subgraph ServiceLayer [Service Layer]
-        AuthService
-        MenuService
-        OrderService
-        DeliveryService
+    subgraph ServiceLayer
+        CS
+        PS
+    end
+
+    subgraph DataLayer
+        CDB["customer.db"]
+        PDB["provider.db"]
     end
     
-    subgraph DataLayer [Data Layer (SQLite)]
-        AuthDB[(Auth DB)]
-        MenuDB[(Menu DB)]
-        OrderDB[(Order DB)]
-        DeliveryDB[(Delivery DB)]
-    end
-    
-    AuthService --> AuthDB
-    MenuService --> MenuDB
-    OrderService --> OrderDB
-    DeliveryService --> DeliveryDB
+    CS --> CDB
+    PS --> PDB
+
 ```
 
