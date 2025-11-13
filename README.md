@@ -4,24 +4,33 @@
 graph TB
     Client[Frontend Client<br/>HTML / CSS / JS] --> Gateway[API Gateway<br/>Express.js]
     
-    Gateway --> CS[Customer Service<br/>Menu, Cart, Order]
-    Gateway --> PS[Provider Service<br/>Menu Management & Delivery]
+    Gateway --> AuthService[Auth Service<br/>Register & Login]
+    Gateway --> MenuService[Menu Service<br/>Menu Makanan]
+    Gateway --> OrderService[Order Service<br/>Cart & Order]
+    Gateway --> DeliveryService[Delivery Service<br/>Pengelolaan Delivery]
     
-    %% Inter-service communication (optional)
-    CS -.->|HTTP Request/Response| PS
-    PS -.->|HTTP Request/Response| CS
+    AuthService -.->|HTTP Request/Response| MenuService
+    MenuService -.->|HTTP Request/Response| OrderService
+    OrderService -.->|HTTP Request/Response| DeliveryService
+    DeliveryService -.->|HTTP Request/Response| AuthService
     
-    subgraph ServiceLayer[Service Layer]
-        CS
-        PS
+    subgraph ServiceLayer [Service Layer]
+        AuthService
+        MenuService
+        OrderService
+        DeliveryService
     end
-
-    subgraph DataLayer[Data Layer (SQLite)]
-        CDB[(customer.db)]
-        PDB[(provider.db)]
+    
+    subgraph DataLayer [Data Layer (SQLite)]
+        AuthDB[(Auth DB)]
+        MenuDB[(Menu DB)]
+        OrderDB[(Order DB)]
+        DeliveryDB[(Delivery DB)]
     end
     
-    CS --> CDB
-    PS --> PDB
+    AuthService --> AuthDB
+    MenuService --> MenuDB
+    OrderService --> OrderDB
+    DeliveryService --> DeliveryDB
 ```
 
