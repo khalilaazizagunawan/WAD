@@ -7,16 +7,16 @@ graph TB
     Gateway --> CS[Customer Service<br/>Menu, Cart, Order]
     Gateway --> PS[Provider Service<br/>Menu Management & Delivery]
     
-    %% Inter-service communication (optional if needed)
+    %% Inter-service communication (optional)
     CS -.->|HTTP Request/Response| PS
     PS -.->|HTTP Request/Response| CS
     
-    subgraph ServiceLayer [Service Layer]
+    subgraph ServiceLayer[Service Layer]
         CS
         PS
     end
 
-    subgraph DataLayer [Data Layer (SQLite)]
+    subgraph DataLayer[Data Layer (SQLite)]
         CDB[(customer.db)]
         PDB[(provider.db)]
     end
@@ -24,5 +24,4 @@ graph TB
     CS --> CDB
     PS --> PDB
 
-```
 
